@@ -1,4 +1,7 @@
+package rdt;
+
 import java.util.*;
+import rdt.PPInfo;
 
 /**
  * Generates the first N prime numbers are power of primes.
@@ -7,26 +10,25 @@ import java.util.*;
  */
 public class Gen {
 
-    private static ArrayList<Integer> nums;
+    private static ArrayList<PPInfo> full;
 
     public static void main(String[] args) {
-        nums = new ArrayList<Integer>();
-        Scanner s = new Scanner(System.in);
-        System.out.println("Enter number of primes and PPs to generate");
-        int input = s.nextInt();
+        full = new ArrayList<PPInfo>();
+        int input = Integer.parseInt(args[0]);
         int count = 0;
         int index = 2;
         while (count < input) {
             if (isPrime(index)) {
                 count++;
-                System.out.println("#" + count + ": " + index + " (P)");
-                nums.add(index);
-            } else if (isPP(index)) {
+                full.add(new PPInfo(index, 1));
+            } else if (isPP(index) != null) {
                 count++;
-                System.out.println("#" + count + ": " + index + " (PP)");
-                nums.add(index);
+                full.add(isPP(index));
             }
             index ++;
+        }
+        for (PPInfo x : full) {
+            System.out.println(x);
         }
     }
 
@@ -39,17 +41,17 @@ public class Gen {
         return true;
     }
 
-    public static boolean isPP(int num) {
-        for (int x : nums) {
-            int copy = x;
+    public static PPInfo isPP(int num) {
+        for (PPInfo x : full) {
+            int copy = x.prime;
             int power = 2;
             while (Math.pow(copy, power) <= num) {
                 if (Math.pow(copy, power) == num) {
-                    return true;
+                    return new PPInfo(x.prime, power);
                 }
-                power++;
+                power *= 2;
             }
         }
-        return false;
+        return null;
     }
 }

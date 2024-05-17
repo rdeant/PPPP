@@ -13,7 +13,8 @@ public class Driver {
             File file = new File("./output.txt");
             Scanner s = new Scanner(file);
             Scanner kb = new Scanner(System.in);
-            System.out.println("Enter a number to find the smallest integer with exactly 2^n divisors");
+            System.out.println("Enter a number to find the smallest "
+            + "integer with exactly 2^n divisors");
             int input = kb.nextInt();
             int index = 0;
             ArrayList<PPInfo> build = new ArrayList<PPInfo>();
